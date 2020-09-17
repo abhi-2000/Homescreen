@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.LauncherActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -21,39 +22,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    private TextView mTextViewResult;
+    private RequestQueue mQueue;
+    private TextView txt;
+    private ImageView imgs;
+    List<modleClass> modleClassList =new ArrayList<>();
     RecyclerView recyclerView;
-    ImageView imageView,imgcat;
-    TextView txtcat;
-   RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = findViewById(R.id.category_recycler);
-        imageView = findViewById(R.id.top_img);
-        imgcat = findViewById(R.id.imageview);
-        txtcat = findViewById(R.id.txtview);
-        mQueue = Volley.newRequestQueue(this);
 
-        String url = "https://www.themealdb.com/api/json/v1/1/random.php";
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//        mTextViewResult = findViewById(R.id.txtview);
+//        imgs = (ImageView) findViewById(R.id.imageview);
+        recyclerView=(RecyclerView) findViewById(R.id.category_recycler);
+        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+//
+
+        mQueue = Volley.newRequestQueue(this);
+        jsonParse();
+    }
+
+    private void jsonParse() {
+        String url = "https://www.themealdb.com/api/json/v1/1/categories.php";
+//        String khana = sea.get
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("meals");
+                            JSONArray jsonArray = response.getJSONArray("categories");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject meals = jsonArray.getJSONObject(i);
-                                String pho = meals.getString("strMealThumb");
-                                Picasso.get().load(pho).into(imageView);
+                                String cat = meals.getString("strCategory");
+//                                String area = meals.getString("strArea");
+                                String pho = meals.getString("strCategoryThumb");
+//                                Picasso.get().load(pho).into(imgs);
 
+                                modleClassList.add(new modleClass(pho,cat));
+
+                                Adapter adapter=new Adapter(modleClassList);
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
                             }
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -65,21 +87,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        List<modleClass> modleClassList =new ArrayList<>();
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst1"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst2"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst3"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst4"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst5"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst6"));
-
-        Adapter adapter=new Adapter(modleClassList);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 }
