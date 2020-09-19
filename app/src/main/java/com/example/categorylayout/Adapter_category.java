@@ -1,5 +1,6 @@
 package com.example.categorylayout;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.view
         String url=modelclassCategoryList.get(position).getUrl();
         String txt=modelclassCategoryList.get(position).getTxt();
         holder.setData(url,txt);
+
     }
 
     @Override
