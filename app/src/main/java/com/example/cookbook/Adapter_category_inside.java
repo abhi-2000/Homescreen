@@ -1,5 +1,7 @@
 package com.example.cookbook;
 
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,31 +15,32 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Adapter_category extends RecyclerView.Adapter<Adapter_category.viewholder_category> {
+public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_category_inside.viewholder_category> {
 
-    private List<modelclassCategory> modelclassCategoryList;
+    private List<modelclassCategory_inside> modelclassCategory_insideList ;
 
-    public Adapter_category(List<modelclassCategory> modelclassCategoryList) {
-        this.modelclassCategoryList = modelclassCategoryList;
+    public Adapter_category_inside(List<modelclassCategory_inside> modelclassCategory_insideList) {
+        this.modelclassCategory_insideList = modelclassCategory_insideList;
     }
 
     @NonNull
     @Override
     public viewholder_category onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item_layout,parent,false);
-        return new Adapter_category.viewholder_category(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_layout,parent,false);
+        return new viewholder_category(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_category.viewholder_category holder, int position) {
-        String url=modelclassCategoryList.get(position).getUrl();
-        String txt=modelclassCategoryList.get(position).getTxt();
+    public void onBindViewHolder(@NonNull viewholder_category holder, int position) {
+        String url=modelclassCategory_insideList.get(position).getUrl();
+        String txt=modelclassCategory_insideList.get(position).getTxt();
         holder.setData(url,txt);
+
     }
 
     @Override
     public int getItemCount() {
-        return modelclassCategoryList.size();
+        return modelclassCategory_insideList.size();
     }
 
 
@@ -62,3 +65,4 @@ public class Adapter_category extends RecyclerView.Adapter<Adapter_category.view
 
 
 }
+
