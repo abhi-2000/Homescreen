@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
@@ -22,15 +24,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout, viewGroup, false);
         return new viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-     int resource = modleClassList.get(position).getImageresource();
-    String txt=modleClassList.get(position).getTxt();
-   holder.setData(resource,txt);
+
+        String url=modleClassList.get(position).getUrl();
+        String txt = modleClassList.get(position).getTxt();
+        holder.setData(url, txt);
     }
 
     @Override
@@ -38,8 +41,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
         return modleClassList.size();
     }
 
-    class viewholder extends RecyclerView.ViewHolder{
-
+    class viewholder extends RecyclerView.ViewHolder {
+        public String url1;
         private ImageView image;
         private TextView text;
 
@@ -48,10 +51,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
             image = itemView.findViewById(R.id.imageview);
             text = itemView.findViewById(R.id.txtview);
         }
-        public void setData(int resource, String txt)
-        {
-            image.setImageResource(resource);
+
+        public void setData(String url, String txt) {
+            url1 = url;
+            Picasso.get().load(url1).into(image);
             text.setText(txt);
+
+
         }
     }
+
 }

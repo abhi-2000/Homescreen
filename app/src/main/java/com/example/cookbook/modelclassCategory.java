@@ -1,10 +1,10 @@
 package com.example.cookbook;
 
-public class modleClass {
+public class modelclassCategory {
     private String url;
     private String txt;
 
-    public modleClass(String url, String txt) {
+    public modelclassCategory(String url, String txt) {
         this.url = url;
         this.txt = txt;
     }
@@ -16,4 +16,5 @@ public class modleClass {
     public String getTxt() {
         return txt;
     }
+
 }

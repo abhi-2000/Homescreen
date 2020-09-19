@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/top_card"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="monospace"
+        android:layout_marginTop="25dp"
+        android:fontFamily="sans-serif-condensed"
         android:text="Categories"
         android:textSize="30sp" />
 

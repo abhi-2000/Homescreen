@@ -27,9 +27,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ImageView imageView,imgcat;
+    ImageView imageView, imgcat;
     TextView txtcat;
-   RequestQueue mQueue;
+    RequestQueue mQueue;
+    ImageView img_cat_items;
+    TextView txt_cat_items;
+    List<modelclassCategory> modelclassCategoryList =new ArrayList<>();
+    List<modleClass> modleClassList =new ArrayList<>();
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +47,12 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.top_img);
         imgcat = findViewById(R.id.imageview);
         txtcat = findViewById(R.id.txtview);
+        //for category items
+        img_cat_items = findViewById(R.id.img_cat_items);
+        txt_cat_items = findViewById(R.id.txt_cat_items);
+        //
         mQueue = Volley.newRequestQueue(this);
-
+        jsonParse();
         String url = "https://www.themealdb.com/api/json/v1/1/random.php";
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -65,21 +77,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        List<modleClass> modleClassList =new ArrayList<>();
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst1"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst2"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst3"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst4"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst5"));
-        modleClassList.add(new modleClass(R.drawable.breakfast,"Brkfst6"));
-
-        Adapter adapter=new Adapter(modleClassList);
+        Adapter adapter = new Adapter(modleClassList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+
+    private void jsonParse() {
+        String url = "https://www.themealdb.com/api/json/v1/1/categories.php";
+//        String khana = sea.get
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("categories");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject meals = jsonArray.getJSONObject(i);
+                                String cat = meals.getString("strCategory");
+//                                String area = meals.getString("strArea");
+                                String pho = meals.getString("strCategoryThumb");
+//                                Picasso.get().load(pho).into(imgs);
+
+                                modleClassList.add(new modleClass(pho,cat));
+
+                                Adapter adapter=new Adapter(modleClassList);
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
     }
 }
