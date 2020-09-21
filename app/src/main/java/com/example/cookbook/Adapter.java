@@ -3,6 +3,7 @@ package com.example.cookbook;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,15 +14,22 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
 
     private List<modleClass> modleClassList;
-//    public String url1;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public Adapter(List<modleClass> modleClassList) {
         this.modleClassList = modleClassList;
     }
+
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -31,8 +39,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-//     int resource = modleClassList.get(position).getImageresource();
-
         String url=modleClassList.get(position).getUrl();
         String txt=modleClassList.get(position).getTxt();
         holder.setData(url,txt);
@@ -45,21 +51,27 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
 
     class viewholder extends RecyclerView.ViewHolder{
 
-        public String url1;
-        private ImageView image= itemView.findViewById(R.id.imageview);
+        private ImageView image;
         private TextView text;
-
-
+        String url1;
         public viewholder(@NonNull View itemView) {
             super(itemView);
-
-//            image = itemView.findViewById(R.id.imageview);
+            image = itemView.findViewById(R.id.imageview);
             text = itemView.findViewById(R.id.txtview);
-//            Picasso.get().load(url1).into(image);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
         public void setData(String url, String txt)
         {
-//            image.setImageResource(resource);
             url1 = url;
             Picasso.get().load(url1).into(image);
             text.setText(txt);

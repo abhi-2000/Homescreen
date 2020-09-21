@@ -13,32 +13,45 @@
         android:layout_height="match_parent"
         android:background="#E6DDDD">
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="249dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="-67dp"
-            android:background="@drawable/sechview_rounded"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toStartOf="@+id/testbtn"
+            android:layout_weight="10"
+            android:background="#AEB8EC"
             android:iconifiedByDefault="false"
             android:padding="5dp"
             android:queryHint="Search here" />
 
+        <Button
+            android:id="@+id/testbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_weight="1"
+            android:text="SEARCH" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/top_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/searchView"
+            android:layout_below="@id/search"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="25dp"
             app:cardCornerRadius="20dp"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="329dp">
-
 
             <ImageView
                 android:id="@+id/top_img"
@@ -97,6 +110,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal" />
+
 
     </RelativeLayout>
 </ScrollView>
