@@ -26,7 +26,9 @@
                 android:layout_margin="5dp"
                 android:layout_height="30dp"
                 android:scaleType="fitCenter"
+                android:onClick="back"
                 android:src="@drawable/abc_vector_test"/>
+
             <ImageView
                 android:id="@+id/cover_img"
                 android:layout_width="match_parent"
@@ -48,6 +50,19 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:onClick="playbtn"
+                android:elevation="1dp"
+                android:src="@drawable/playbtn"
+                android:layout_marginTop="60dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_centerHorizontal="true"
+                 />
+
             <TextView
                 android:id="@+id/cat_area"
                 android:layout_width="wrap_content"
@@ -65,10 +80,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="16dp" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+
         </RelativeLayout>
 
 
@@ -190,16 +202,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/sou"
                 android:layout_below="@+id/inst1"
                 android:layout_marginTop="10dp">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Youtube"
-                    android:id="@+id/youtubebtn"
-                    android:background="#F86A6A"
-                    android:layout_weight="1"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -207,8 +213,20 @@
                     android:id="@+id/sourcebtn"
                     android:background="#8BC34A"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SHARE"
+                    android:id="@+id/sharebtn"
+                    android:onClick="sharebtn"
+                    android:background="#7A4FC6"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"/>
+
             </LinearLayout>
+
 
         </RelativeLayout>
 

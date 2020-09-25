@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     RequestQueue mQueue;
     ImageView img_cat_items;
     String[] cat_item ={};
+    String[] random_item={};
     TextView txt_cat_items;
     List<modleClass> modleClassList = new ArrayList<>();
 
@@ -93,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         startActivity(intent);
     }
 
+    public void randomfun(View view) {
+        Intent i = new Intent(MainActivity.this, ingradient.class);
+        String name1 = random_item[0].toString();
+        i.putExtra("keyname",name1);
+        startActivity(i);
+    }
 
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -128,6 +135,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
                             JSONArray jsonArray = response.getJSONArray("meals");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject meals = jsonArray.getJSONObject(i);
+                                String item_name = meals.getString("strMeal");
+                                random_item = Arrays.copyOf(random_item, cat_item.length+1);
+                                random_item[random_item.length -1] = item_name;
                                 String pho = meals.getString("strMealThumb");
                                 Picasso.get().load(pho).into(imageView);
 

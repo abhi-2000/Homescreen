@@ -99,7 +99,7 @@ public class catagory extends AppCompatActivity  {
                                 String cat = meals.getString("strMeal");
                                 String pho = meals.getString("strMealThumb");
                                 cat_item2 = Arrays.copyOf(cat_item2, cat_item2.length+1);
-                                cat_item2[cat_item2.length -1] = id;
+                                cat_item2[cat_item2.length -1] = cat;
                                 modelclassCategory_insideList.add(new modelclassCategory_inside(pho, cat));
 
                                 Adapter_category_inside adapter = new Adapter_category_inside(modelclassCategory_insideList);

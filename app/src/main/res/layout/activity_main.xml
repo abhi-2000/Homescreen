@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#E6DDDD"
     tools:context=".MainActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,6 +14,13 @@
         android:background="#E6DDDD">
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dshfkj"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"/>
         <EditText
             android:id="@+id/search"
             android:layout_width="249dp"
@@ -28,7 +35,7 @@
             android:background="#AEB8EC"
             android:iconifiedByDefault="false"
             android:padding="5dp"
-            android:queryHint="Search here" />
+            android:hint="Search here" />
 
         <Button
             android:id="@+id/testbtn"
@@ -57,6 +64,7 @@
                 android:id="@+id/top_img"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
+                android:onClick="randomfun"
                 android:background="@drawable/breakfast"
                 android:scaleType="centerCrop" />
 
@@ -89,13 +97,15 @@
 
         <TextView
             android:id="@+id/catogries"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/top_card"
             android:layout_marginLeft="22dp"
+            android:paddingBottom="10dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="monospace"
-            android:text="Categories"
+            android:fontFamily="sans-serif-black"
+            android:text=": Categories :"
+            android:gravity="center"
             android:textSize="30sp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -109,6 +119,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="-10dp"
             android:orientation="horizontal" />
 
 
