@@ -1,9 +1,10 @@
 package com.example.cookbook;
 
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,51 +15,53 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
+public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_category_inside.viewholder_category> {
 
-    private List<modleClass> modleClassList;
-    private OnItemClickListener mListener;
+    private List<modelclassCategory_inside> modelclassCategory_insideList ;
+    private Adapter_category_inside.OnItemClickListener mListener;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public Adapter(List<modleClass> modleClassList) {
-        this.modleClassList = modleClassList;
+
+    public Adapter_category_inside(List<modelclassCategory_inside> modelclassCategory_insideList) {
+        this.modelclassCategory_insideList = modelclassCategory_insideList;
     }
 
     @NonNull
     @Override
-    public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout,viewGroup,false);
-        return new viewholder(view);
+    public viewholder_category onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_layout,parent,false);
+        return new viewholder_category(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        String url=modleClassList.get(position).getUrl();
-        String txt=modleClassList.get(position).getTxt();
+    public void onBindViewHolder(@NonNull viewholder_category holder, int position) {
+        String url=modelclassCategory_insideList.get(position).getUrl();
+        String txt=modelclassCategory_insideList.get(position).getTxt();
         holder.setData(url,txt);
+
     }
 
     @Override
     public int getItemCount() {
-        return modleClassList.size();
+        return modelclassCategory_insideList.size();
     }
 
-    class viewholder extends RecyclerView.ViewHolder{
 
-        private ImageView image;
+
+    class viewholder_category extends RecyclerView.ViewHolder{
+        public String url1;
+        private ImageView image= itemView.findViewById(R.id.img_cat_items);
         private TextView text;
-        String url1;
-        public viewholder(@NonNull View itemView) {
+
+        public viewholder_category(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.imageview);
-            text = itemView.findViewById(R.id.txtview);
+            text = itemView.findViewById(R.id.txt_cat_items);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -78,5 +81,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
             text.setText(txt);
 
         }
+
     }
+
+
 }
