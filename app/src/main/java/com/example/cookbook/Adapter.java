@@ -22,6 +22,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
@@ -41,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewholder> {
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         String url=modleClassList.get(position).getUrl();
         String txt=modleClassList.get(position).getTxt();
-   holder.setData(url,txt);
+        holder.setData(url,txt);
     }
 
     @Override

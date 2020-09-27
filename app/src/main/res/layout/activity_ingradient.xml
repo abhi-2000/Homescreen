@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E1DEDE"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/ytlayout"
+                android:layout_width="match_parent"
+                android:elevation="1dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                        android:id="@+id/ytbutton_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:elevation="1dp"
+                    android:onClick="ytback"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/abc_vector_test" />
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:autoPlay="false"
+                    app:showFullScreenButton="true"
+                    />
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_vip"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:elevation="1dp"
+                android:onClick="back"
+                android:scaleType="fitCenter"
+                android:src="@drawable/abc_vector_test" />
+
+            <ImageView
+                android:id="@+id/cover_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/res_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp"
+                android:elevation="1dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:elevation="1dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:onClick="playbtn"
+                android:src="@drawable/playbtn" />
+
+            <TextView
+                android:id="@+id/cat_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/res_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:elevation="1dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:text="Indian"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    <!--my design-->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/cv">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/ingradi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/abc_vector_test"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:id="@+id/inga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text=": Ingradients :"
+                        android:textColor="#3F51B5"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/ing1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/inga"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ingra"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="No result"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/meas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textAlignment="textEnd"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--        desc-->
+            <LinearLayout
+                android:id="@+id/inst1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ingradi"
+                android:layout_marginTop="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:text=": Instruction :"
+                            android:textColor="#673AB7"
+                            android:textSize="25sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:text="No result Found"
+                            android:paddingTop="10dp"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!--        youtube-->
+            <LinearLayout
+                android:id="@+id/sou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/inst1"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/sourcebtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="#8BC34A"
+                    android:text="Source" />
+
+                <Button
+                    android:id="@+id/sharebtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="#7A4FC6"
+                    android:onClick="sharebtn"
+                    android:text="SHARE" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
+

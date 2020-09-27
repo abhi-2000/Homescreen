@@ -18,6 +18,15 @@ import java.util.List;
 public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_category_inside.viewholder_category> {
 
     private List<modelclassCategory_inside> modelclassCategory_insideList ;
+    private Adapter_category_inside.OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
 
     public Adapter_category_inside(List<modelclassCategory_inside> modelclassCategory_insideList) {
         this.modelclassCategory_insideList = modelclassCategory_insideList;
@@ -44,6 +53,7 @@ public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_catego
     }
 
 
+
     class viewholder_category extends RecyclerView.ViewHolder{
         public String url1;
         private ImageView image= itemView.findViewById(R.id.img_cat_items);
@@ -52,6 +62,17 @@ public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_catego
         public viewholder_category(@NonNull View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.txt_cat_items);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
         public void setData(String url, String txt)
         {
@@ -65,4 +86,3 @@ public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_catego
 
 
 }
-
