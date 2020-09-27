@@ -21,14 +21,14 @@
             android:orientation="horizontal"
             android:backgroundTintMode="multiply"
             android:backgroundTint="#EC0E0E"
-            android:background="@drawable/ic_launcher_background"
+            android:background="@drawable/breakfast"
             android:layout_height="175dp">
 
             <ImageView
                 android:id="@+id/category_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/breakfast"
                 android:layout_margin="30dp"
                 android:scaleType="centerCrop"/>
             <ScrollView

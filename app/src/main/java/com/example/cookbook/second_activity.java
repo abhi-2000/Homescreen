@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class second_activity extends AppCompatActivity  {
+public class second_activity extends AppCompatActivity {
     List<modelclassCategory_inside> modelclassCategory_insideList = new ArrayList<>();
     RecyclerView recyclerView;
     private RequestQueue mQueue;
@@ -38,9 +38,6 @@ public class second_activity extends AppCompatActivity  {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-//
-
         mQueue = Volley.newRequestQueue(this);
         GetData getData = new GetData();
         getData.execute();
@@ -56,7 +53,6 @@ public class second_activity extends AppCompatActivity  {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             jsonParse();
             return null;
         }
@@ -70,8 +66,8 @@ public class second_activity extends AppCompatActivity  {
     }
 
     public void jsonParse() {
+
         String url = "https://www.themealdb.com/api/json/v1/1/filter.php?c=beef";
-//        String khana = sea.get
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -82,15 +78,11 @@ public class second_activity extends AppCompatActivity  {
                                 JSONObject meals = jsonArray.getJSONObject(i);
                                 String cat = meals.getString("strMeal");
                                 String pho = meals.getString("strMealThumb");
-
                                 modelclassCategory_insideList.add(new modelclassCategory_inside(pho, cat));
-
                                 Adapter_category_inside adapter = new Adapter_category_inside(modelclassCategory_insideList);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

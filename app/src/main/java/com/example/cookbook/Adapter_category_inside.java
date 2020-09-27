@@ -62,7 +62,4 @@ public class Adapter_category_inside extends RecyclerView.Adapter<Adapter_catego
         }
 
     }
-
-
 }
-

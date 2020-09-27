@@ -40,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="45dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Recipe"
+            android:text="Top Recipe"
             android:textColor="#ffffff"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -53,7 +53,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="Of The Day"
+            android:text="For You"
             android:textColor="#ffffff"
             android:textSize="30sp"
             android:textStyle="bold" />

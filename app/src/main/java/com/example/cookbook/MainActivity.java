@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
     @Override
     public void onItemClick(int position) {
         Intent intent=new Intent(this,second_activity.class);
-        final String clickedItem=modleClassList.get(position).toString();
         startActivity(intent);
-         }
+
+    }
 
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(MainActivity.this, "Loaded Successfully!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "Loaded Successfully!", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
         }
     }
@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
         mQueue.add(request);
-
     }
 
     private void jsonParse() {
@@ -140,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
                                 recyclerView.setAdapter(adapter);
                                 adapter.setOnItemClickListener(MainActivity.this);
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
