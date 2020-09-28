@@ -31,9 +31,9 @@
             android:id="@+id/searchbar"
             android:background="#ffffff"
             android:layout_below="@+id/toolbar"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             app:cardCornerRadius="50dp">
@@ -87,10 +87,10 @@
             android:layout_below="@id/top_card"
             android:layout_marginLeft="22dp"
             android:layout_marginTop="25dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/abeezee"
             android:gravity="center"
             android:paddingBottom="10dp"
-            android:text=": Categories :"
+            android:text="Categories"
 
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -118,6 +118,4 @@
             app:headerLayout="@layout/header"
             android:layout_gravity="start"
             />
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

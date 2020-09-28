@@ -8,6 +8,6 @@
         android:title="About" android:icon="@drawable/ic_baseline_info_24"/>
     <item
         android:id="@+id/feedback"
-        android:title="Feedback" android:icon="@drawable/ic_baseline_feedback_24"/>
+        android:title="Feedback (Mail)" android:icon="@drawable/ic_baseline_feedback_24"/>
 
 </menu>

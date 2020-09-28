@@ -14,15 +14,13 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"></activity>
-<!--        keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenLayout|uiMode|screenSize|smallestScreenSize-->
 
         <activity
             android:name=".catagory"
             android:configChanges="orientation"></activity>
         <activity
             android:name=".ingradient"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenLayout|uiMode|screenSize|smallestScreenSize
-"></activity>
+            android:configChanges="orientation"></activity>
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

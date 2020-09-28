@@ -56,15 +56,7 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
         cat_de = (TextView) findViewById(R.id.category_txt);
         toptxt = (TextView) findViewById(R.id.top);
         recyclerView = (RecyclerView) findViewById(R.id.category_recycler_inside);
-//
-//        cat1 = getIntent().getStringExtra("keyname");
-//        pho_url = getIntent().getStringExtra("keypho_url");
-//        cat_des = getIntent().getStringExtra("key_desc");
-//        cat_de.setText(cat_des);
-//        toptxt.setText(cat1);
-//        Picasso.get().load(pho_url).into(cat_img);
-//        GetData getData = new GetData();
-//        getData.execute();
+
     CheckInternet();
     }
     private void CheckInternet() {
@@ -110,7 +102,6 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
      @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(catagory.this, ingradient.class);
-//        final String clickedItem = modelclassCategory_insideList.get(position).toString();
         String ca = cat_item2[position];
         intent.putExtra("keyname", ca);
         startActivity(intent);
@@ -166,8 +157,6 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
                                 recyclerView.setAdapter(adapter);
                                 adapter.setOnItemClickListener(catagory.this);
                                 adapter.notifyDataSetChanged();
-
-//                        Toast.makeText(catagory.this, "Loaded Successfully!", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {

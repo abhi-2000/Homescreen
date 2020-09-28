@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -47,8 +48,9 @@ public class ingradient<dish1> extends AppCompatActivity {
     private TextView ingra;
     private TextView meas;
     private TextView desc;
+    public String soulink="";
     ImageView play1;
-    private Button sourcebtn;
+    public Button sourcebtn;
     RelativeLayout ytback;
     public String yt = "";
     public String brolink = "";
@@ -83,7 +85,10 @@ public class ingradient<dish1> extends AppCompatActivity {
         sourcebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(brolink));
+                if (soulink.equals("") || soulink == "null"){
+                    soulink = "https://www.allrecipes.com";
+                }
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(soulink));
                 startActivity(browserIntent);
             }
         });
@@ -140,34 +145,44 @@ CheckInternet();
 
 
     public void playbtn(View view) {
-                iv_vip.setVisibility(View.INVISIBLE);
-                play1.setVisibility(View.INVISIBLE);
-                res_name.setVisibility(View.INVISIBLE);
-                cat_area.setVisibility(View.INVISIBLE);
-                int cout = 0;
-                for (int j = 0; j < yt.length(); j++) {
-                    if (yt.charAt(j) == '=') {
-                        cout = j+1;
-                        break;
-                    }
+        int orientation = getApplicationContext().getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            iv_vip.setVisibility(View.INVISIBLE);
+            play1.setVisibility(View.INVISIBLE);
+            res_name.setVisibility(View.INVISIBLE);
+            cat_area.setVisibility(View.INVISIBLE);
+            int cout = 0;
+            for (int j = 0; j < yt.length(); j++) {
+                if (yt.charAt(j) == '=') {
+                    cout = j + 1;
+                    break;
                 }
-                while (cout != yt.length()) {
-                    pass = pass + yt.charAt(cout);
-                    cout++;
-                }
-
-        YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
-        youTubePlayerView.setVisibility(View.VISIBLE);
-
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-
-             String videoId=pass;
-                youTubePlayer.loadVideo(videoId,0);
             }
-        });
+            while (cout != yt.length()) {
+                pass = pass + yt.charAt(cout);
+                cout++;
+            }
+
+            YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
+            getLifecycle().addObserver(youTubePlayerView);
+            youTubePlayerView.setVisibility(View.VISIBLE);
+
+            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+
+                    String videoId = pass;
+                    youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+        }
+    else {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(yt.toString())));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(yt));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage("com.google.android.youtube");
+                startActivity(intent);
+    }
     }
 
     public void sharebtn(View view) {
@@ -244,10 +259,6 @@ CheckInternet();
                 txt.setText("data not fetched");
             }
             else{
-
-
-
-
                 try {
                     JSONObject object = new JSONObject(s);
                     JSONArray jsonArray = object.getJSONArray("meals");
@@ -260,9 +271,11 @@ CheckInternet();
                         String pho = meals.getString("strMealThumb");
                         String ytlink = meals.getString("strYoutube");
                         yt = ytlink;
-
-                        String soulink = meals.getString("strSource");
-                        brolink = soulink;
+                        soulink = meals.getString("strSource");
+//                        brolink = soulink;
+//                        if (soulink.equals("") || soulink == "null"){
+//                            soulink = "https://www.allrecipes.com";
+//                        }
                         for(int j=1;j<=20;j++){
                             String ingval = "strIngredient" + Integer.toString(j);
                             String meas_val = "strMeasure" + Integer.toString(j);

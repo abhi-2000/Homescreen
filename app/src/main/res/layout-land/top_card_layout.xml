@@ -20,7 +20,8 @@
         <ImageView
             android:id="@+id/top_img_card"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/breakfast"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -30,7 +31,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="45dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/abeezee"
             android:text="Top Suggestions"
             android:textColor="#ffffff"
             android:textSize="30sp"
@@ -43,7 +44,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-smallcaps"
+            android:fontFamily="@font/abeezee"
             android:text="For You"
             android:textColor="#ffffff"
             android:textSize="30sp"

@@ -7,6 +7,14 @@
     android:background="#E1DEDE"
     android:padding="10dp">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv"
         android:layout_width="match_parent"
@@ -19,32 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:id="@+id/ytlayout"
-                android:layout_width="match_parent"
-                android:elevation="1dp"
-                android:layout_height="match_parent">
-
-                <ImageView
-                        android:id="@+id/ytbutton_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:elevation="1dp"
-                    android:onClick="ytback"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/abc_vector_test" />
-
-                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:id="@+id/youtube_player_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone"
-                    app:autoPlay="false"
-                    app:showFullScreenButton="true"
-                    />
-            </RelativeLayout>
             <ImageView
                 android:id="@+id/iv_vip"
                 android:layout_width="30dp"
@@ -110,7 +92,8 @@
 
     </androidx.cardview.widget.CardView>
     <!--my design-->
-    <ScrollView
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@+id/cv">
@@ -202,8 +185,8 @@
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
-                            android:text="Instructions"
                             android:fontFamily="@font/abeezee"
+                            android:text="Instructions"
                             android:textColor="#673AB7"
                             android:textSize="25sp"
                             android:textStyle="bold" />
@@ -213,8 +196,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="10dp"
-                            android:text="No result Found"
                             android:fontFamily="@font/abeezee"
+                            android:text="No result Found"
                             android:paddingTop="10dp"
                             android:textSize="20sp" />
 
@@ -236,9 +219,9 @@
                     android:id="@+id/sourcebtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/abeezee"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/abeezee"
                     android:background="#8BC34A"
                     android:text="Source" />
 
@@ -249,8 +232,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="#7A4FC6"
-                    android:onClick="sharebtn"
                     android:fontFamily="@font/abeezee"
+                    android:onClick="sharebtn"
                     android:text="SHARE" />
 
             </LinearLayout>
@@ -259,5 +242,7 @@
         </RelativeLayout>
     </ScrollView>
 
+</RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
 

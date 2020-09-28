@@ -102,37 +102,10 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         setSupportActionBar(toolbar);
         nav = (NavigationView) findViewById(R.id.navbar);
         iv_search = findViewById(R.id.iv_search);
-//        iv_search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(getApplicationContext(), ingradient.class);
-//                String name1 = search1.getText().toString();
-//                i.putExtra("keyname", name1);
-//                startActivity(i);
-//            }
-//        });
-//        icon_search = findViewById(R.id.icon_search);
         drawerLayout = findViewById(R.id.drawer);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-//        LayoutInflater factory = getLayoutInflater();
-//        View textEntryView = factory.inflate(R.layout.header, null);
-//        ImageView home = (ImageView) textEntryView.findViewById(R.id.iv_search);
-//        home.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "SHOW", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-//
-//        nav.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "SHOW", Toast.LENGTH_LONG).show();
-//            }
-//        });
 
 
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -140,20 +113,18 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.feedback:
-                        Toast.makeText(getApplicationContext(), "feedback", Toast.LENGTH_LONG).show();
-                        final Intent intent = new Intent(Intent.ACTION_VIEW)
-                                .setType("plain/text")
-                                .setData(Uri.parse("cookbook@gmail.com"))
-                                .setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail")
-                                .putExtra(Intent.EXTRA_EMAIL, new String[]{"cookbook@gmail.com"})
-                                .putExtra(Intent.EXTRA_SUBJECT, "feedback")
-                                .putExtra(Intent.EXTRA_TEXT, "Feedback for COOKBOOK");
-                        startActivity(intent);
+                        Intent email = new Intent(Intent.ACTION_SEND);
+                        email.putExtra(Intent.EXTRA_EMAIL, new String[]{"mrabhishek1379@gmail.com"});
+                        email.putExtra(Intent.EXTRA_SUBJECT, "Cookbook feedback");
+                        email.putExtra(Intent.EXTRA_TEXT, "Please provide valuable feedback : ");
+                        email.setType("message/rfc822");
+                        startActivity(Intent.createChooser(email, "Choose an Email client :"));
                         drawerLayout.closeDrawer(GravityCompat.START);
+
+
                         break;
 
                     case R.id.recipe:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG).show();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.about:
@@ -178,26 +149,22 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
             }
         });
         CheckInternet();
-//        GetData getData = new GetData();
-//        getData.link = "https://www.themealdb.com/api/json/v1/1/search.php?f=E";
-//        getData.link1 = "https://www.themealdb.com/api/json/v1/1/categories.php";
-//        getData.execute();
 
     }
+
     private void CheckInternet() {
         ConnectivityManager manager = (ConnectivityManager)
-                getApplicationContext() .getSystemService(Context.CONNECTIVITY_SERVICE);
+                getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        if(null!=activeNetwork){
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                 GetData getData = new GetData();
                 getData.link = "https://www.themealdb.com/api/json/v1/1/search.php?f=e";
                 getData.link1 = "https://www.themealdb.com/api/json/v1/1/categories.php";
                 getData.execute();
             }
-        }
-        else{
+        } else {
 
             dialogboxfun();
 
@@ -240,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         intent.putExtra("keypho_url", ph);
         intent.putExtra("key_desc", des);
         intent.putExtra("keyname", ca);
-        Toast.makeText(MainActivity.this, cat_item[position].toString(), Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
 
@@ -250,24 +216,20 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         Intent i = new Intent(MainActivity.this, ingradient.class);
         String name1 = random_item[position];
         i.putExtra("keyname", name1);
-        Toast.makeText(MainActivity.this, random_item[position].toString(), Toast.LENGTH_SHORT).show();
         startActivity(i);
     }
 
     //
     public void searchClk(View view) {
-                Intent i = new Intent(getApplicationContext(), ingradient.class);
+        Intent i = new Intent(getApplicationContext(), ingradient.class);
         String name1 = search1.getText().toString();
+        if(name1.equals("")) {
+            name1="hbdf";
+
+        }
         i.putExtra("keyname", name1);
         startActivity(i);
-
     }
-
-    //
-//    public void iconSearchClk(View view) {
-//   drawerLayout.openDrawer(GravityCompat.START);
-//        //        drawerLayout.closeDrawer(GravityCompat.START);
-//    }
 
 
     private class GetData extends AsyncTask<Void, Void, String> {
@@ -306,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         private String jsonpare() {
             try {
                 URL url = new URL(link1);
-//                URL url1=new URL("https://www.themealdb.com/api/json/v1/1/categories.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 if (inputStream == null)
@@ -383,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
 
                     } else {
 
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 4, RecyclerView.VERTICAL, false);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 3, RecyclerView.VERTICAL, false);
                         recyclerView.setLayoutManager(gridLayoutManager);
                     }
                     JSONObject obj = new JSONObject(json);
