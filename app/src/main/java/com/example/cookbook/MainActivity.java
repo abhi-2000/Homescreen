@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnItemCli
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
         if (null != activeNetwork) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
                 GetData getData = new GetData();
                 getData.link = "https://www.themealdb.com/api/json/v1/1/search.php?f=e";
                 getData.link1 = "https://www.themealdb.com/api/json/v1/1/categories.php";

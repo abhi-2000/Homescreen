@@ -101,7 +101,7 @@ CheckInternet();
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
         if(null!=activeNetwork){
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE ||  activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
                 String name1 = "https://www.themealdb.com/api/json/v1/1/search.php?s="+dish1;
                 FetchAnActivity faa = new FetchAnActivity(name1,cat_area,res_name,cover_img,ingra,meas,desc);
                 faa.execute();

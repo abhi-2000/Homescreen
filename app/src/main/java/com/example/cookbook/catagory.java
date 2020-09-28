@@ -65,7 +65,7 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
         if(null!=activeNetwork){
-            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE || activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
                 cat1 = getIntent().getStringExtra("keyname");
                 pho_url = getIntent().getStringExtra("keypho_url");
                 cat_des = getIntent().getStringExtra("key_desc");
