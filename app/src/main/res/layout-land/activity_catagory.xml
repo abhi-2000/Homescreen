@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,11 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".catagory">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/abeezee"
+        android:fontFamily="sans-serif-smallcaps"
         android:textColor="#ffffff"
         android:gravity="center"
         android:layout_marginTop="12dp"
@@ -27,6 +34,7 @@
         android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/abc_vector_test" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -39,7 +47,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="150dp"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -62,12 +72,13 @@
                     android:layout_marginRight="10dp"
                     android:textColor="#000000"
                     android:textSize="18sp"
-                    android:fontFamily="@font/abeezee"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </ScrollView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:id="@+id/category_recycler_inside"
@@ -79,4 +90,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
 </RelativeLayout>
+

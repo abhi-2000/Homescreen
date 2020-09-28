@@ -1,11 +1,19 @@
 package com.example.cookbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -44,38 +52,63 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catagory);
         progressDialog = new ProgressDialog(this);
-
         cat_img = (ImageView) findViewById(R.id.category_img);
         cat_de = (TextView) findViewById(R.id.category_txt);
         toptxt = (TextView) findViewById(R.id.top);
         recyclerView = (RecyclerView) findViewById(R.id.category_recycler_inside);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
-//
-        cat1 = getIntent().getStringExtra("keyname");
-        pho_url = getIntent().getStringExtra("keypho_url");
-        cat_des = getIntent().getStringExtra("key_desc");
-        cat_de.setText(cat_des);
-        toptxt.setText(cat1);
-        Picasso.get().load(pho_url).into(cat_img);
-        GetData getData = new GetData();
-        getData.execute();
+    CheckInternet();
+    }
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext() .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if(null!=activeNetwork){
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+                cat1 = getIntent().getStringExtra("keyname");
+                pho_url = getIntent().getStringExtra("keypho_url");
+                cat_des = getIntent().getStringExtra("key_desc");
+                cat_de.setText(cat_des);
+                toptxt.setText(cat1);
+                Picasso.get().load(pho_url).into(cat_img);
+                GetData getData = new GetData();
+                getData.execute();
+            }
+        }
+        else{
+            dialogboxfun();
+
+        }
     }
 
+    private void dialogboxfun() {
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(catagory.this);
+        builder2.setMessage("No internet Connection");
+        builder2.setCancelable(false);
+        builder2.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+
+        AlertDialog alert12 = builder2.create();
+        alert12.show();
+
+    }
+    ///////// recycller key
      @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(catagory.this, ingradient.class);
-//        final String clickedItem = modelclassCategory_insideList.get(position).toString();
         String ca = cat_item2[position];
         intent.putExtra("keyname", ca);
         startActivity(intent);
     }
 
     public void secBackOne(View view) {
-    Intent intent =new Intent(catagory.this,MainActivity.class);
-    startActivity(intent);
+        finish();
     }
 
     private class GetData extends AsyncTask<Void, Void, String> {
@@ -99,6 +132,17 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
             super.onPostExecute(st);
             if (!(st.equalsIgnoreCase("Data is not fetched"))) {
                 try {
+                    int orientation = getApplicationContext().getResources().getConfiguration().orientation;
+                    if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, RecyclerView.VERTICAL, false);
+                        recyclerView.setLayoutManager(gridLayoutManager);
+
+                    }
+                    else {
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3, RecyclerView.VERTICAL, false);
+                        recyclerView.setLayoutManager(gridLayoutManager);
+                    }
+
                     JSONObject object = new JSONObject(st);
                     JSONArray jsonArray = object.getJSONArray("meals");
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -113,7 +157,6 @@ public class catagory extends AppCompatActivity  implements Adapter_category_ins
                                 recyclerView.setAdapter(adapter);
                                 adapter.setOnItemClickListener(catagory.this);
                                 adapter.notifyDataSetChanged();
-
                         progressDialog.dismiss();
                     }
                 } catch (JSONException e) {

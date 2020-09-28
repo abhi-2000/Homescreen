@@ -1,9 +1,15 @@
 package com.example.cookbook;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +39,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static java.security.AccessController.getContext;
+
 public class ingradient<dish1> extends AppCompatActivity {
     private TextView res_name;
     private TextView cat_area;
@@ -39,12 +48,19 @@ public class ingradient<dish1> extends AppCompatActivity {
     private TextView ingra;
     private TextView meas;
     private TextView desc;
-    private Button sourcebtn;
+    public String soulink="";
+    ImageView play1;
+    public Button sourcebtn;
     RelativeLayout ytback;
-    public String pass = "";
     public String yt = "";
     public String brolink = "";
     String dish1;
+    ImageView iv_vip;
+    ImageView yt_back;
+    String meas_add="";
+    String ing_add="";
+    private ProgressDialog progressDialog;
+    public String pass = "";
     YouTubePlayerView youTubePlayerView;
 
     @Override
@@ -57,62 +73,117 @@ public class ingradient<dish1> extends AppCompatActivity {
         cat_area = (TextView) findViewById(R.id.cat_area);
         meas = (TextView) findViewById(R.id.meas);
         desc = (TextView) findViewById(R.id.desc);
+        iv_vip=findViewById(R.id.iv_vip);
+        yt_back=findViewById(R.id.ytbutton_back);
         cover_img = (ImageView) findViewById(R.id.cover_img);
+        play1=findViewById(R.id.play);
         ingra = (TextView) findViewById(R.id.ingra);
         sourcebtn = (Button) findViewById(R.id.sourcebtn);
+        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtube_player_view);
+        progressDialog = new ProgressDialog(this);
 
         sourcebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(brolink));
+                if (soulink.equals("") || soulink == "null"){
+                    soulink = "https://www.allrecipes.com";
+                }
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(soulink));
                 startActivity(browserIntent);
             }
         });
 
-        String name1 = "https://www.themealdb.com/api/json/v1/1/search.php?s="+dish1;
-        FetchAnActivity faa = new FetchAnActivity(name1,cat_area,res_name,cover_img,ingra,meas,desc);
-        faa.execute();
+CheckInternet();
     }
+    private void CheckInternet() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getApplicationContext() .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if(null!=activeNetwork){
+            if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+                String name1 = "https://www.themealdb.com/api/json/v1/1/search.php?s="+dish1;
+                FetchAnActivity faa = new FetchAnActivity(name1,cat_area,res_name,cover_img,ingra,meas,desc);
+                faa.execute();
+
+            }
+        }
+        else{
+            dialogboxfun();
+
+        }
+    }
+
+    private void dialogboxfun() {
+        AlertDialog.Builder builder3 = new AlertDialog.Builder(ingradient.this);
+        builder3.setMessage("No internet Connection");
+        builder3.setCancelable(false);
+        builder3.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        CheckInternet();
+                    }
+                });
+
+        AlertDialog alert13 = builder3.create();
+        alert13.show();
+
+    }
+
+
 
     public void ytback(View view) {
-        youTubePlayerView.setVisibility(View.GONE);
-        youTubePlayerView.release();
+     youTubePlayerView.setVisibility(View.GONE);
+       youTubePlayerView.release();
+        iv_vip.setVisibility(View.VISIBLE);
+        play1.setVisibility(View.VISIBLE);
+        res_name.setVisibility(View.VISIBLE);
+        cat_area.setVisibility(View.VISIBLE);
+
     }
+
 
     public void playbtn(View view) {
-//        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(yt.toString())));
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(yt));
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.setPackage("com.google.android.youtube");
-//        startActivity(intent);
-        int cout = 0;
-
-        for (int j = 0; j < yt.length(); j++) {
-            if (yt.charAt(j) == '=') {
-                cout = j+1;
-                break;
+        int orientation = getApplicationContext().getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            iv_vip.setVisibility(View.INVISIBLE);
+            play1.setVisibility(View.INVISIBLE);
+            res_name.setVisibility(View.INVISIBLE);
+            cat_area.setVisibility(View.INVISIBLE);
+            int cout = 0;
+            for (int j = 0; j < yt.length(); j++) {
+                if (yt.charAt(j) == '=') {
+                    cout = j + 1;
+                    break;
+                }
             }
-        }
-        while (cout != yt.length()) {
-            pass = pass + yt.charAt(cout);
-            cout++;
-        }
-
-        YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
-        getLifecycle().addObserver(youTubePlayerView);
-        youTubePlayerView.setVisibility(View.VISIBLE);
-
-        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-//                String videoId = "S0Q4gqBUs7c";
-
-                String videoId = pass;
-                youTubePlayer.loadVideo(videoId,0);
+            while (cout != yt.length()) {
+                pass = pass + yt.charAt(cout);
+                cout++;
             }
-        });
+
+            YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
+            getLifecycle().addObserver(youTubePlayerView);
+            youTubePlayerView.setVisibility(View.VISIBLE);
+
+            youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+
+                    String videoId = pass;
+                    youTubePlayer.loadVideo(videoId, 0);
+                }
+            });
+        }
+    else {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(yt.toString())));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(yt));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setPackage("com.google.android.youtube");
+                startActivity(intent);
     }
-
+    }
 
     public void sharebtn(View view) {
         Intent txtIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -122,12 +193,13 @@ public class ingradient<dish1> extends AppCompatActivity {
         startActivity(Intent.createChooser(txtIntent ,"Share"));
     }
 
-    public void back(View view) {
-        Intent intent=new Intent(ingradient.this,MainActivity.class);
-        startActivity(intent);
-    }
 
+
+    public void back(View view) {
+        finish();
+    }
     /////////////////////////////
+
 
     public class FetchAnActivity extends AsyncTask<Void,Void,String> {
         TextView txt;
@@ -148,6 +220,13 @@ public class ingradient<dish1> extends AppCompatActivity {
             this.meas = meas;
             this.desc = desc;
             this.url1 = url1;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage("Loading");
+            progressDialog.show();
         }
 
         @Override
@@ -175,6 +254,7 @@ public class ingradient<dish1> extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            progressDialog.dismiss();
             if (s.equalsIgnoreCase("Data is not fetched")){
                 txt.setText("data not fetched");
             }
@@ -191,75 +271,40 @@ public class ingradient<dish1> extends AppCompatActivity {
                         String pho = meals.getString("strMealThumb");
                         String ytlink = meals.getString("strYoutube");
                         yt = ytlink;
+                        soulink = meals.getString("strSource");
+//                        brolink = soulink;
+//                        if (soulink.equals("") || soulink == "null"){
+//                            soulink = "https://www.allrecipes.com";
+//                        }
+                        for(int j=1;j<=20;j++){
+                            String ingval = "strIngredient" + Integer.toString(j);
+                            String meas_val = "strMeasure" + Integer.toString(j);
+                            String all_ing = meals.getString(ingval);
+                            String all_meas = meals.getString(meas_val);
+                            if(all_ing == "null"){
+                                all_ing = "";
+                            }
+                            if (all_meas == "null"){
+                                all_meas = "";
+                            }
+                            ing_add = ing_add + "\n\n"+ all_ing;
+                            meas_add = meas_add + "\n\n" + all_meas;
 
-                        String soulink = meals.getString("strSource");
-                        brolink = soulink;
-                        String ingrad1 = meals.getString("strIngredient1");
-                        String ingrad2 = meals.getString("strIngredient2");
-                        String ingrad3 = meals.getString("strIngredient3");
-                        String ingrad4 = meals.getString("strIngredient4");
-                        String ingrad5 = meals.getString("strIngredient5");
-                        String ingrad6 = meals.getString("strIngredient6");
-                        String ingrad7 = meals.getString("strIngredient7");
-                        String ingrad8 = meals.getString("strIngredient8");
-                        String ingrad9 = meals.getString("strIngredient9");
-                        String ingrad10 = meals.getString("strIngredient10");
-                        String ingrad11 = meals.getString("strIngredient11");
-                        String ingrad12 = meals.getString("strIngredient12");
-                        String ingrad13 = meals.getString("strIngredient13");
-                        String ingrad14 = meals.getString("strIngredient14");
-                        String ingrad15 = meals.getString("strIngredient15");
-                        String ingrad16 = meals.getString("strIngredient16");
-                        String ingrad17 = meals.getString("strIngredient17");
-                        String ingrad18 = meals.getString("strIngredient18");
-                        String ingrad19 = meals.getString("strIngredient19");
-                        String ingrad20 = meals.getString("strIngredient20");
-
-                        String meas1 = meals.getString("strMeasure1");
-                        String meas2 = meals.getString("strMeasure2");
-                        String meas3 = meals.getString("strMeasure3");
-                        String meas4 = meals.getString("strMeasure4");
-                        String meas5 = meals.getString("strMeasure5");
-                        String meas6 = meals.getString("strMeasure6");
-                        String meas7 = meals.getString("strMeasure7");
-                        String meas8 = meals.getString("strMeasure8");
-                        String meas9 = meals.getString("strMeasure9");
-                        String meas10 = meals.getString("strMeasure10");
-                        String meas11 = meals.getString("strMeasure11");
-                        String meas12 = meals.getString("strMeasure12");
-                        String meas13 = meals.getString("strMeasure13");
-                        String meas14 = meals.getString("strMeasure14");
-                        String meas15 = meals.getString("strMeasure15");
-                        String meas16 = meals.getString("strMeasure16");
-                        String meas17 = meals.getString("strMeasure17");
-                        String meas18 = meals.getString("strMeasure18");
-                        String meas19 = meals.getString("strMeasure19");
-                        String meas20 = meals.getString("strMeasure20");
+                        }
 
                         String descrip = meals.getString("strInstructions");
-
 
                         Picasso.get().load(pho).into(cover_img);
                         res_name.setText(recipe_name);
                         cat_area.setText(cata+"/"+area);
                         desc.setText(descrip);
-                        String ingradients1 = ingrad1+"\n\n"+ingrad2+"\n\n"+ingrad3+"\n\n"+ingrad4+"\n\n"+
-                                ingrad5+"\n\n"+ingrad6+"\n\n"+ingrad7+"\n\n"+ingrad8+"\n\n"+ingrad9+"\n\n"+ingrad10+"\n\n"+
-                                ingrad11+"\n\n"+ingrad12+"\n\n"+ingrad13+"\n\n"+ingrad14+"\n\n"+
-                                ingrad15+"\n\n"+ingrad16+"\n\n"+ingrad17+"\n\n"+ingrad18+"\n\n"+ingrad19+"\n\n"+ingrad20;
-
-                        String measurement1 = meas1+"\n\n"+meas2+"\n\n"+meas3+"\n\n"+meas4+"\n\n"+
-                                meas5+"\n\n"+meas6+"\n\n"+meas7+"\n\n"+meas8+"\n\n"+meas9+"\n\n"+meas10+"\n\n"
-                                +meas11+"\n\n"+meas12+"\n\n"+meas13+"\n\n"+meas14+"\n\n"+
-                                meas15+"\n\n"+meas16+"\n\n"+meas17+"\n\n"+meas18+"\n\n"+meas19+"\n\n"+meas20;
-                        ingra.setText(ingradients1.trim());
-                        meas.setText(measurement1.trim());
+                        ingra.setText(ing_add.trim());
+                        meas.setText(meas_add.trim());
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-            }
+                }            }
         }
 
     }
